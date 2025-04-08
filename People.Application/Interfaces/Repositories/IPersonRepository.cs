@@ -7,7 +7,6 @@ namespace People.Application.Interfaces.Repositories
         IEnumerable<Person> GetAll();
         Person? GetById(Guid id);
         void Add(Person person);
-        Person? Update(Person person);
         void Delete(Guid id);
     }
 }

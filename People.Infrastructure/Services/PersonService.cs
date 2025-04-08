@@ -14,15 +14,7 @@ namespace People.Infrastructure.Services
             _personRepository = personRepository;
         }
 
-        public IEnumerable<Person> GetAllPeople()
-        {
-            return _personRepository.GetAll();
-        }
 
-        public Person? GetPersonById(Guid id)
-        {
-            return _personRepository.GetById(id);
-        }
         public Person AddPerson(PersonRequestDTO newPerson)
         {
             var person = new Person
@@ -38,35 +30,35 @@ namespace People.Infrastructure.Services
             return person;
         }
 
-        public Person? UpdatePerson(Guid id, PersonRequestDTO updatedPerson)
+        public bool UpdatePerson(Guid id, PersonRequestDTO updatedPerson)
         {
-            var person = _personRepository.GetById(id);
+            var existingPerson = _personRepository.GetById(id);
 
-            if (person != null)
+            if (existingPerson == null)
             {
-                person.FirstName = updatedPerson.FirstName;
-                person.LastName = updatedPerson.LastName;
-                person.DateOfBirth = updatedPerson.DateOfBirth;
-                person.Gender = updatedPerson.Gender;
-                person.BirthPlace = updatedPerson.BirthPlace;
-
-                _personRepository.Update(person);
+                return false;
             }
 
-            return person;
+            existingPerson.FirstName = updatedPerson.FirstName;
+            existingPerson.LastName = updatedPerson.LastName;
+            existingPerson.Gender = updatedPerson.Gender;
+            existingPerson.DateOfBirth = updatedPerson.DateOfBirth;
+            existingPerson.BirthPlace = updatedPerson.BirthPlace;
+
+            return true;
         }
         public bool DeletePerson(Guid id)
         {
             var person = _personRepository.GetById(id);
 
-            if (person != null)
+            if (person == null)
             {
-                _personRepository.Delete(id);
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                _personRepository.Delete(id);
+                return true;
             }
         }
         public IEnumerable<Person> Filter(PersonFilterDTO filter)

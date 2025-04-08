@@ -8,17 +8,16 @@ namespace People.Domain.Entities
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [MinLength(1, ErrorMessage = "first name cannot be empty!")]
         public required string FirstName { get; set; }
         [Required]
-        [MinLength(1, ErrorMessage = "last name cannot be empty!")]
+
         public required string LastName { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
         [Required]
+        [EnumDataType(typeof(GenderType))]
         public GenderType Gender { get; set; }
         [Required]
-        [MinLength(1, ErrorMessage = "birth place cannot be empty!")]
         public required string BirthPlace { get; set; }
     }
 }

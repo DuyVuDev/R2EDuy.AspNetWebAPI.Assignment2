@@ -15,7 +15,7 @@ namespace People.Infrastructure.Repositories
 
         private void GeneratePeopleData()
         {
-            var firstNames = new[] { "Alice", "John", "Jane", "Michael", "Sarah", "David", "Laura", "Robert", "Emily", "James" };
+            var firstNames = new[] { "Alice", "alice", "Jane", "Michael", "Sarah", "David", "Laura", "Robert", "Emily", "James" };
             var lastNames = new[] { "Nguyen", "Doe", "Smith", "Johnson", "Brown", "Williams", "Jones", "Garcia", "Miller", "Davis" };
             var birthPlaces = new[] { "Hanoi", "New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas" };
             var random = new Random();
@@ -41,21 +41,5 @@ namespace People.Infrastructure.Repositories
         public void Add(Person person) => _people.Add(person);
 
         public void Delete(Guid id) => _people.RemoveAll(p => p.Id == id);
-
-        public Person? Update(Person person)
-        {
-            var existingPerson = _people.FirstOrDefault(p => p.Id == person.Id);
-
-            if (existingPerson != null)
-            {
-                existingPerson.FirstName = person.FirstName;
-                existingPerson.LastName = person.LastName;
-                existingPerson.Gender = person.Gender;
-                existingPerson.DateOfBirth = person.DateOfBirth;
-                existingPerson.BirthPlace = person.BirthPlace;
-            }
-
-            return existingPerson;
-        }
     }
 }
